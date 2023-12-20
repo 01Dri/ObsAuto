@@ -1,4 +1,4 @@
-package me.dri.factory;
+package me.dri.factory.scene;
 
 import io.obswebsocket.community.client.model.Scene;
 
