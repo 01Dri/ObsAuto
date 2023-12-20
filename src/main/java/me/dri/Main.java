@@ -1,38 +1,17 @@
 package me.dri;
 
-import io.obswebsocket.community.client.OBSRemoteController;
-import me.dri.input.InputKinds;
+import me.dri.consts.DefaultConfigurationsSocket;
+import me.dri.factory.FactorySceneOBS;
+import me.dri.factory.FactorySceneOBSImpl;
+import me.dri.models.ConfigurationSocket;
 
 public class Main {
-    public static void main(String[] args)  {
-        System.out.println("Hello world!");
+    public static void main(String[] args) {
 
-        OBSRemoteController controller = OBSRemoteController.builder()
-                .host("localhost")
-                .port(4455)
-                .build();
-        controller.connect();
-        controller.createScene("Teste", createSceneResponse -> {
-            if (createSceneResponse.isSuccessful()) {
-                System.out.println("Created scene");
-            }
-        });
+        ConfigurationSocket configurationSocket = new ConfigurationSocket(DefaultConfigurationsSocket.LOCALHOST, DefaultConfigurationsSocket.DEFAULT_PORT);
+        FactorySceneOBS factorySceneOBS = new FactorySceneOBSImpl(configurationSocket);
+        factorySceneOBS.createScene("Teste");
 
-
-        controller.getInputKindList(true, getInputKindListResponse -> {
-            if (getInputKindListResponse.isSuccessful()) {
-                System.out.println(getInputKindListResponse.getInputKinds());
-            }
-        });
-
-        controller.createInput("Teste", "tela", InputKinds.MONITOR_CAPTURE.getValue(), null, true, createInputResponse -> {
-                    if (createInputResponse.isSuccessful()) {
-                        System.out.println("Created input");
-                    } else {
-                        System.out.println("Error");
-                    }
-                });
-        controller.disconnect();
 
     }
 
